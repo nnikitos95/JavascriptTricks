@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+  <!-- Тег meta для указания кодировки -->
+  <meta charset="utf-8">
+  <title>123</title>
+  <script>
+       
+        
+      //alert('kkk');
+      function degToRad(degree){
+          return degree*Math.PI/180;
+      }
+     function renderTime(){
+          var now = new Date();
+          var today = now.toDateString();
+          var time = now.toLocaleDateString();
+          var hours  = now.getHours();
+          var minutes = now.getMinutes();
+          var seconds = now.getSeconds();
+          var milliseconds = now.getMilliseconds();
+          var newseconds = seconds+(milliseconds/1000);
+         
+          
+          //backgorund
+          gradient = ctx.createRadialGradient(250,250,5,250,250,300);
+         gradient.addColorStop(0,"#09303a");
+         gradient.addColorStop(1,"black");
+         ctx.fillStyle = gradient;
+         // ctx.fillStyle = '#333333';
+          ctx.fillRect(0,0,500,500);
+          //hours
+          ctx.beginPath(); ctx.arc(250,250,200,degToRad(270),degToRad((hours*15)-90)); 
+          ctx.stroke();
+          //minutes
+          ctx.beginPath();  ctx.arc(250,250,170,degToRad(270),degToRad((minutes*6)-90));
+          ctx.stroke();
+          //seconds
+           ctx.beginPath(); ctx.arc(250,250,140,degToRad(270),degToRad((newseconds*6)-90));
+           ctx.stroke();
+          //Date
+          ctx.font = "25px Arial";
+          ctx.fillStyle = "#28d1fa";
+          ctx.fillText(today,175,250);
+          //Time
+         ctx.font = "17px Arial";
+          ctx.fillStyle = "#28d1fa";
+          ctx.fillText(time,175,270);
+         var dataURL = canvas.toDataURL();
+         
+         document.getElementById('myImage').src=dataURL;
+      }
+      setInterval(renderTime,40);
+      
+    </script>
+</head>
+
+<body>
+    <canvas id="icanvas" width="500" height="500" style="border:1px solid black;"></canvas>
+    <img id="myImage"/>
+    <script>
+        var canvas = document.getElementById('icanvas');
+       var ctx = canvas.getContext('2d');
+         ctx.strokeStyle='#28d1fa';
+        ctx.lineWidth = 17;
+        ctx.lineCap='round';
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = '#28d1fa'
+    </script>
+</body>
+
+</html>
