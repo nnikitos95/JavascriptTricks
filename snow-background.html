@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>show-background</title>
+    <style>
+        body{
+            background-color: #102a54;
+        }
+    </style>
+    <script>
+            window.onload = function(){
+            //get the canvas and context and store in vars
+            if(canvas = document.getElementById('sky')) //alert("прочитал канвас");
+            var canvas = document.getElementById('sky');
+            var ctx = canvas.getContext('2d');
+            //set canvas dims t owindow height and width
+            var W = window.innerWidth;
+            var H = window.innerHeight;
+            canvas.width = W;
+            canvas.height = H;
+            
+            
+            //generate the showflakes and apply attributes
+            var mf = Math.round(H*W/5000);
+            var flakes = [];
+            
+            //look through the empy flakes and apply attributes
+            for(var i=0;i<mf;i++){
+               flakes.push({
+                   x:Math.random()*W,
+                   y:Math.random()*H,
+                   r:Math.random()*5+2,
+                   d:Math.random()+1
+               });
+            }
+            //alert(flakes.length);
+            function drawFlakes(){
+                ctx.clearRect(0,0,W,H);
+                ctx.fillStyle = "white";
+                ctx.beginPath();
+                for(var i = 0;i < mf; i++){
+                   
+                    var f = flakes[i];
+                    ctx.moveTo(f.x,f.y);
+                    ctx.shadowBlur = f.r+1;
+                    ctx.shadowColor = '#28d1fa';
+                    ctx.arc(f.x,f.y,f.r,0,Math.PI*2,true);
+                    
+                }
+                ctx.fill();
+               moveFlakes();
+            }
+            var angle = 0;
+            function moveFlakes(){
+                angle += 0.01;
+                 for(var i = 0;i < mf; i++){
+                     var f = flakes[i];
+                     f.y += Math.pow(f.d,2)+1;
+                     f.x += Math.sin(angle)*2;
+                     if(f.y>H){
+                         flakes[i] = {x:Math.random()*W,
+                                     y:0,
+                                     r:f.r,d:f.d};
+                     }
+                 }
+            }
+         setInterval(drawFlakes,25);
+        
+        }
+    </script>
+</head>
+<body>
+   <canvas id="sky">
+   </canvas>
+</body>
+</html>
